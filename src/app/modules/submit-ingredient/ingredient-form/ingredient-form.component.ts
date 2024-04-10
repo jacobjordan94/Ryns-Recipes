@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Category, SubCategory } from '../../../core/services/ingredients/ingredients.interface';
 import { IngredientsService } from '../../../core/services/ingredients/ingredients.service';
-import { Observable, tap } from 'rxjs';
+import { Observable, startWith, switchMap, tap } from 'rxjs';
 import { AsyncPipe, NgFor } from '@angular/common';
 
 @Component({
@@ -21,38 +21,40 @@ export class IngredientFormComponent {
   });
 
   categories$: Observable<Category[]>;
-  subCategories$!: Observable<SubCategory[]>;
+  subCategories$!: Observable<SubCategory[] | undefined>;
 
-  private get _subCategoryId(): number {
-    return this.form.get('subCategoryId')?.value;
+  private get _categoryIdForm(): FormControl<number> {
+    return this.form.get('categoryId') as FormControl<number>;
+  }
+  private get _subCategoryIdForm(): FormControl<number | undefined> {
+    return this.form.get('subCategoryId') as FormControl<number | undefined>;
   }
   private get _categoryId(): number {
-    return this.form.get('categoryId')?.value;
+    return this._categoryIdForm?.value;
+  }
+  private get _subCategoryId(): number | undefined {
+    return this._subCategoryIdForm?.value;
   }
   
   constructor(private _is: IngredientsService) { 
     this.categories$ = this._is.categories$;
-    this.updateSubCategory(this._subCategoryId);
-  }
-
-  public updateSubCategory(categoryId: number = this._categoryId): void {
-    this.form.get('subCategoryId')?.patchValue(null);
-    this.subCategories$ = this._is.getSubCategoriesByCategoryId(Number(categoryId))
-      .pipe(
-        tap(subCategories => {
-          if(subCategories.length === 0) {
-            this.form.get('subCategoryId')?.patchValue(undefined);
-            this.form.get('subCategoryId')?.disable();
-          } else {
-            this.form.get('subCategoryId')?.patchValue(1);
-            this.form.get('subCategoryId')?.enable();
-          }
-        }),
-      );
+    this.subCategories$ = this._categoryIdForm.valueChanges.pipe(
+      startWith(this._categoryId),
+      switchMap(categoryId => this._is.getSubCategoriesByCategoryId(categoryId)),
+      tap(subCategories => {
+        if(subCategories.length === 0) {
+          this._subCategoryIdForm.patchValue(undefined);
+          this._subCategoryIdForm.disable();
+        } else {
+          this._subCategoryIdForm.patchValue(0);
+          this._subCategoryIdForm.enable();
+        }
+      })
+    );
   }
 
   public onSubmit(): void {
     const data = this.form.getRawValue();
-    console.log(Object.assign({}, data));
+    console.log('Submit!', data);
   }
 }
