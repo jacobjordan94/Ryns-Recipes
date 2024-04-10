@@ -1,5 +1,35 @@
-<form #heroForm="ngForm">
-  <input type="text" class="form-control" id="name" required [(ngModel)]="ingredient.name" name="name">
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <fieldset class="p-3">
+    <legend>Submit Ingredients</legend>
+    <div class="mb-3">
+      <label for="categorySelect" class="form-label">Category</label>
+      <select formControlName="categoryId" class="form-select" name="categorySelect" id="categorySelect" (change)="updateSubCategory()">
+        <option *ngFor="let category of categories$ | async" [ngValue]="category.id">{{ category.name }}</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label for="subCategorySelect" class="form-label">Sub Category</label>
+      <select 
+        formControlName="subCategoryId" 
+        class="form-select" 
+        name="subCategorySelect"
+        id="subCategorySelect"
+      >
+        <option *ngFor="let sub of subCategories$ | async" [ngValue]="sub.id">{{ sub.name }}</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label for="ingredientName" class="form-label">Ingredient Name</label>
+      <input 
+        type="text"
+        formControlName="ingredientName"
+        class="form-control" 
+        id="ingredientName" 
+        name="ingredientName"
+      >
+    </div>
+    <div class="d-flex justify-content-end">
+      <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Submit</button>
+    </div>
+  </fieldset>
 </form>
-
-<p>TODO: remove this: {{ingredient.name}} {{id}}</p>

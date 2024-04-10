@@ -12,26 +12,6 @@ import { IngredientFormComponent } from './ingredient-form/ingredient-form.compo
   styleUrl: './submit-ingredient.component.scss'
 })
 export class SubmitIngredientComponent {
-  public category: Category[] = this._is.categories;
-  public subCategory: SubCategory[] = this._is.subCategories;
-  constructor (private _is: IngredientsService) {}; 
-
-  public selectCategoryID!: number;
-  public selectSubCategoryID!: number;
-
-  onCatSelect(value: any): void {
-    value = parseFloat(value);
-    this.selectCategoryID = value;
-  }
-
-  onSubCatSelect(value: any): void {
-    value = parseFloat(value);
-    this.selectSubCategoryID = value;
-  }
-
-  getSubCategories(id: number): SubCategory[] {
-    return this._is.getSubCategoryByCategory(id);
-  }
 }
 
 
