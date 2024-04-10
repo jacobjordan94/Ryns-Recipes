@@ -1,33 +1,48 @@
 import { Injectable } from "@angular/core";
 import { CATEGORIES, INGREDIENTS, SUBCATEGORIES } from "./ingredients.data";
 import { Category, Ingredient, SubCategory } from "./ingredients.interface";
+import { BehaviorSubject, Observable, map, tap } from "rxjs";
 
 @Injectable({ providedIn: 'root' })
 export class IngredientsService {
-    public ingredients: Ingredient[] = INGREDIENTS;
-    public categories: Category[] = CATEGORIES;
-    public subCategories: SubCategory[] = SUBCATEGORIES;
+
+    private _ingredients$: BehaviorSubject<Ingredient[]> = new BehaviorSubject(INGREDIENTS);
+    public ingredient$: Observable<Ingredient[]> = this._ingredients$.asObservable();
+    private _categories$: BehaviorSubject<Category[]> = new BehaviorSubject(CATEGORIES);
+    public categories$: Observable<Category[]> = this._categories$.asObservable();
+    private _subCategories$: BehaviorSubject<SubCategory[]> = new BehaviorSubject(SUBCATEGORIES);
+    public subCategories$: Observable<Ingredient[]> = this._subCategories$.asObservable();
 
     constructor() { }
 
-    public getIngredient(id: number): Ingredient | undefined {
-        return this.ingredients.filter(ingredient => ingredient.id === id).at(0);
+    public getIngredient(id: number): Observable<Ingredient | undefined> {
+        return this.ingredient$.pipe(
+            map(ingredients => ingredients.filter(ingredient => ingredient.id === id).at(0))
+        );
     }
 
-    public getCategory(id: number): Category | undefined {
-        return this.categories.filter(category => category.id === id).at(0);
+    public getCategory(id: number): Observable<Category | undefined> {
+        return this.categories$.pipe(
+            map(categories => categories.filter(category => category.id === id).at(0))
+        );
     }
 
-    public getIngredientByCategory(id: number): Ingredient[] {
-        return this.ingredients.filter(ingredient => ingredient.categoryID === id);
+    public getIngredientByCategory(categoryId: number): Observable<Ingredient[]> {
+        return this.ingredient$.pipe(
+            map(ingredients => ingredients.filter(ingredient => ingredient.categoryID === categoryId))
+        );
     }
 
-    public getSubCategory(id: number): SubCategory[] {
-        return this.subCategories.filter(sub => sub.categoryID === id);
+    public getSubCategoriesByCategoryId(categoryId: number): Observable<SubCategory[]> {
+        return this.subCategories$.pipe(
+            map(subCategories => subCategories.filter(sub => sub.categoryID === categoryId))
+        );
     }
 
-    public getSubCategoryByCategory(id: number): SubCategory[] {
-        return this.subCategories.filter(sub => sub.categoryID === id);
+    public getSubCategoryById(id: number): Observable<SubCategory | undefined> {
+        return this.subCategories$.pipe(
+            map(subCategories => subCategories.filter(sub => sub.id === id).at(0)),
+        );
     }
 
     public addIngredient(existingIngredients: Ingredient, newIngredient: Ingredient): Ingredient {
