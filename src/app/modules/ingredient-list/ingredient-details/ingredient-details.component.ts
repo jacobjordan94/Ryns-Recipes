@@ -3,6 +3,7 @@ import { IngredientsService } from '../../../core/services/ingredients/ingredien
 import { Ingredient } from '../../../core/services/ingredients/ingredients.interface';
 import { Category } from '../../../core/services/ingredients/ingredients.interface';
 import { CommonModule } from '@angular/common';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-ingredient-details',
@@ -13,7 +14,7 @@ import { CommonModule } from '@angular/common';
 })
 export class IngredientDetailsComponent implements OnChanges {
   @Input() id!: number;
-  public category!: Category | undefined;
+  public category!: Observable<Category | undefined>;
 
   constructor(private _is: IngredientsService) {};
 
@@ -21,7 +22,7 @@ export class IngredientDetailsComponent implements OnChanges {
     this.category = this._is.getCategory(this.id);
   }
 
-  getIngredients(id: number): Ingredient[] {
+  getIngredients(id: number): Observable<Ingredient[]> {
     return this._is.getIngredientByCategory(id);
   }
 }

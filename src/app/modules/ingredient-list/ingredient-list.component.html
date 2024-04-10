@@ -2,7 +2,7 @@
 <div class="category-dropdown">
   <label for="category">Category: </label>
   <select #currentSelect (change)="onSelect(currentSelect.value)">
-    <option *ngFor="let element of category" [value]="element.id">{{element.name}}</option>
+    <option *ngFor="let element of category$ | async" [value]="element.id">{{element.name}}</option>
   </select>
 </div>
 

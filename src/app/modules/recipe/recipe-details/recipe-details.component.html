@@ -3,7 +3,7 @@
   <div class="ingredient-list">
     <h3>Ingredients</h3>
     <ng-container *ngFor="let ingredientId of recipe.ingredients; index as i;">
-      <ng-container *ngIf="getIngredient(ingredientId) as ingredient">
+      <ng-container *ngIf="(getIngredient(ingredientId) | async) as ingredient">
         <ul>{{recipe.amount[i]}} {{recipe.unit[i]}} {{ ingredient.name }}</ul>
       </ng-container>
     </ng-container>

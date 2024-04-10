@@ -1,5 +1,5 @@
 <div *ngIf="category">
-  <ng-container *ngFor="let ingredient of getIngredients(this.id)">
+  <ng-container *ngFor="let ingredient of getIngredients(this.id) | async">
     <ul>{{ingredient.name}}</ul>
   </ng-container>
 </div>
