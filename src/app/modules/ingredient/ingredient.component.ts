@@ -4,12 +4,11 @@ import { Observable, map, switchMap, tap } from "rxjs";
 import { Ingredient } from "../../core/services/ingredients/ingredients.interface";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AsyncPipe, NgIf } from "@angular/common";
-import { AppCategoryNameComponent } from "../../core/components/category-name/category-name.component";
-import { AppSubCategoryNameComponent } from "../../core/components/subcategory-name/subcategory-name.component";
+import { CategoryNamePipe } from "../../core/pipes/category-name/category-name.pipe";
 
 @Component({
     standalone: true,
-    imports: [ AsyncPipe, NgIf, AppCategoryNameComponent, AppSubCategoryNameComponent ],
+    imports: [ AsyncPipe, NgIf, CategoryNamePipe ],
     templateUrl: './ingredient.component.html',
 })
 export class IngredientComponent {
