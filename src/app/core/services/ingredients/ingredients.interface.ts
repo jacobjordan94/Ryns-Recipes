@@ -3,6 +3,7 @@ export interface NewIngredient {
   categoryID: number;
   subCategoryId?: number;
   image?: string;
+  description?: string;
 }
 
 export interface Ingredient extends NewIngredient {

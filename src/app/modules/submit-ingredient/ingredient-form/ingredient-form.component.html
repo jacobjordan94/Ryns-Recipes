@@ -29,6 +29,7 @@
         id="ingredientName" 
         name="ingredientName"
         placeholder="Add ingredient name here..."
+        [class.is-invalid]="form.get('name')?.invalid && form.get('name')?.touched"
       >
     </div>
     <div class="mb-3">
@@ -41,6 +42,18 @@
         name="image"
         placeholder="https://"
       >
+    </div>
+    <div class="mb-3">
+      <label for="description">Description</label>
+      <textarea 
+        name="description" 
+        id="ingredientDescription"
+        class="form-control"
+        cols="30" 
+        rows="3" 
+        formControlName="description"
+      ></textarea>
+
     </div>
     <div class="d-flex justify-content-end pt-3">
       <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Submit</button>

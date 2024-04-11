@@ -19,6 +19,7 @@ export class IngredientFormComponent {
     subCategoryId: new FormControl(0),
     name: new FormControl('', [ Validators.required ]),
     image: new FormControl(''),
+    description: new FormControl(''),
   });
 
   categories$: Observable<Category[]>;
@@ -62,6 +63,7 @@ export class IngredientFormComponent {
       subCategoryId: 0,
       name: '', 
       image: '',
+      description: '',
     });
   }
 }
