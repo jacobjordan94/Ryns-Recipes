@@ -12,7 +12,7 @@ import { AsyncPipe, NgIf } from "@angular/common";
         <div class="ingredient-card card">
             <div class="card-body">
                 <h5 class="card-title">{{ ingredient.name }}</h5>
-                <h6 *ngIf="category$ | async as cat" class="card-subtitle mb-2 text-mutest">
+                <h6 *ngIf="category$ | async as cat" class="card-subtitle mb-2 text-muted">
                     {{ cat.name }} <span *ngIf="subCategory$ | async as sub">&bull; {{ sub.name }}</span>
                 </h6>
                 <p class="card-text">...</p>
