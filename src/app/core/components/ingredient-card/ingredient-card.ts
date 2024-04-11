@@ -12,7 +12,7 @@ import { AppSubCategoryNameComponent } from "../subcategory-name/subcategory-nam
     imports: [ NgIf, AsyncPipe, AppCategoryNameComponent, AppSubCategoryNameComponent ],
     template: `
         <div class="ingredient-card card" [class.shadow]="hovering && hoverable" [class.hover]="hovering && hoverable">
-        <img *ngIf="ingredient.image" class="card-img-top" [src]="ingredient.image">
+        <img *ngIf="ingredient.image" class="card-img-top" [src]="ingredient.image" height="128">
             <div class="card-body">
                 <h5 class="card-title">{{ ingredient.name }}</h5>
                 <h6 *ngIf="category$ | async as cat" class="card-subtitle mb-2 text-muted">
@@ -28,7 +28,8 @@ import { AppSubCategoryNameComponent } from "../subcategory-name/subcategory-nam
     `,
     styles: [
         '.ingredient-card { transition: 250ms ease-in-out; }',
-        '.ingredient-card.hover { cursor: pointer; transform: scale(1.015); }'
+        '.ingredient-card.hover { cursor: pointer; transform: scale(1.015); }',
+        '.card-img-top { object-fit: cover; }'
     ]
 })
 export class AppIngredientCard implements OnInit {
