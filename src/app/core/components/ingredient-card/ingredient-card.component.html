@@ -13,4 +13,7 @@
             {{ ingredient.description || 'There is currently no description for this item' }}
         </p>
     </div>
+    <button *ngIf="showBookmark" type="button" class="btn-bookmark btn btn-primary p-1" (click)="toggleBookmark($event)">
+        <i class="bi" [ngClass]="(isBookmarked$ | async) ? 'bi-bookmark-star-fill' : 'bi-bookmark-star'"></i>
+    </button>
 </div>
