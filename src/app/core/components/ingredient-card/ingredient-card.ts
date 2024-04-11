@@ -1,19 +1,28 @@
 import { Component, HostListener, Input, OnInit } from "@angular/core";
 import { Category, Ingredient, SubCategory } from "../../services/ingredients/ingredients.interface";
-import { Observable } from "rxjs";
+import { Observable, map } from "rxjs";
 import { IngredientsService } from "../../services/ingredients/ingredients.service";
 import { AsyncPipe, NgIf } from "@angular/common";
+import { AppCategoryNameComponent } from "../category-name/category-name.component";
+import { AppSubCategoryNameComponent } from "../subcategory-name/subcategory-name.component";
 
 @Component({
     selector: 'app-ingredient-card',
     standalone: true,
-    imports: [ NgIf, AsyncPipe ],
+    imports: [ NgIf, AsyncPipe, AppCategoryNameComponent, AppSubCategoryNameComponent ],
     template: `
         <div class="ingredient-card card" [class.shadow]="hovering && hoverable" [class.hover]="hovering && hoverable">
             <div class="card-body">
                 <h5 class="card-title">{{ ingredient.name }}</h5>
-                <h6 *ngIf="category$ | async as cat" class="card-subtitle mb-2 text-muted">
+                <!-- <h6 *ngIf="category$ | async as cat" class="card-subtitle mb-2 text-muted">
                     {{ cat.name }} <span *ngIf="subCategory$ | async as sub">&bull; {{ sub.name }}</span>
+                </h6> -->
+                <h6 *ngIf="category$ | async as cat" class="card-subtitle mb-2 text-muted">
+                    <app-category-name [id]="ingredient.categoryID"></app-category-name>
+                    <ng-container *ngIf="hasSubCategory$ | async">
+                        <span class="ms-1 me-1">&bull;</span>
+                        <app-subcategory-name [id]="ingredient.subCategoryId"></app-subcategory-name>
+                    </ng-container>
                 </h6>
                 <p class="card-text">...</p>
             </div>
@@ -40,13 +49,13 @@ export class AppIngredientCard implements OnInit {
     @Input() public hoverable = false;
 
     category$!: Observable<Category | undefined>;
-    subCategory$!: Observable<SubCategory | undefined>;
+    hasSubCategory$!: Observable<boolean>;
 
     constructor(private _is: IngredientsService) {}
 
     ngOnInit(): void {
         this.category$ = this._is.getCategory(this.ingredient.categoryID);
-        this.subCategory$ = this._is.getSubCategoryById(this.ingredient.subCategoryId);    
+        this.hasSubCategory$ = this._is.getSubCategoryById(this.ingredient.subCategoryId).pipe(map(Boolean));
     }
 
 }
