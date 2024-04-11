@@ -2,6 +2,7 @@ export interface NewIngredient {
   name: string;
   categoryID: number;
   subCategoryId?: number;
+  image?: string;
 }
 
 export interface Ingredient extends NewIngredient {

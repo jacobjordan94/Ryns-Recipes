@@ -12,11 +12,9 @@ import { AppSubCategoryNameComponent } from "../subcategory-name/subcategory-nam
     imports: [ NgIf, AsyncPipe, AppCategoryNameComponent, AppSubCategoryNameComponent ],
     template: `
         <div class="ingredient-card card" [class.shadow]="hovering && hoverable" [class.hover]="hovering && hoverable">
+        <img *ngIf="ingredient.image" class="card-img-top" [src]="ingredient.image">
             <div class="card-body">
                 <h5 class="card-title">{{ ingredient.name }}</h5>
-                <!-- <h6 *ngIf="category$ | async as cat" class="card-subtitle mb-2 text-muted">
-                    {{ cat.name }} <span *ngIf="subCategory$ | async as sub">&bull; {{ sub.name }}</span>
-                </h6> -->
                 <h6 *ngIf="category$ | async as cat" class="card-subtitle mb-2 text-muted">
                     <app-category-name [id]="ingredient.categoryID"></app-category-name>
                     <ng-container *ngIf="hasSubCategory$ | async">
