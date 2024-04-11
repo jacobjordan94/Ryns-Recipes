@@ -31,6 +31,17 @@
         placeholder="Add ingredient name here..."
       >
     </div>
+    <div class="mb-3">
+      <label for="image" class="form-label">Ingredient Image</label>
+      <input 
+        type="text"
+        formControlName="image"
+        class="form-control" 
+        id="image" 
+        name="image"
+        placeholder="https://"
+      >
+    </div>
     <div class="d-flex justify-content-end pt-3">
       <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Submit</button>
     </div>

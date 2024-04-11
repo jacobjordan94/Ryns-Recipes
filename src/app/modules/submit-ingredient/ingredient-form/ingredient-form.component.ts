@@ -17,7 +17,8 @@ export class IngredientFormComponent {
   public form: FormGroup = new FormGroup({
     categoryID: new FormControl(0),
     subCategoryId: new FormControl(0),
-    name: new FormControl('', [ Validators.required ])
+    name: new FormControl('', [ Validators.required ]),
+    image: new FormControl(''),
   });
 
   categories$: Observable<Category[]>;
@@ -60,6 +61,7 @@ export class IngredientFormComponent {
       categoryId: 0,
       subCategoryId: 0,
       name: '', 
+      image: '',
     });
   }
 }
