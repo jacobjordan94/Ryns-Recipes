@@ -1,0 +1,9 @@
+:host ::ng-deep {
+    app-ingredient-card {
+      display: flex;
+      flex: 1 1 25%;
+      .ingredient-card {
+        flex-grow: 1;
+      }
+    }
+  }
