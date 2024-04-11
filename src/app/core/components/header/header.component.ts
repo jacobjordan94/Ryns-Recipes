@@ -11,7 +11,7 @@ type HeaderLink = {
     standalone: true,
     imports: [ RouterLink, RouterLinkActive, NgFor ],
     template: `
-        <nav class="navbar navbar-expand-lg navbar-dark bg-primary c-light ps-3 pe-3">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary c-light ps-3 pe-3 sticky-top">
             <a class="navbar-brand" href="#">
                 <i class="bi bi-egg-fill"></i>
                 <span class="ms-2">Ryn's Recipes</span>
