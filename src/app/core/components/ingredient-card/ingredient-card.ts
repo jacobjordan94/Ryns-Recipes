@@ -10,22 +10,7 @@ import { AppSubCategoryNameComponent } from "../subcategory-name/subcategory-nam
     selector: 'app-ingredient-card',
     standalone: true,
     imports: [ NgIf, AsyncPipe, AppCategoryNameComponent, AppSubCategoryNameComponent ],
-    template: `
-        <div class="ingredient-card card" [class.shadow]="hovering && hoverable" [class.hover]="hovering && hoverable">
-        <img *ngIf="ingredient.image" class="card-img-top" [src]="ingredient.image" height="128">
-            <div class="card-body">
-                <h5 class="card-title">{{ ingredient.name }}</h5>
-                <h6 *ngIf="category$ | async as cat" class="card-subtitle mb-2 text-muted">
-                    <app-category-name [id]="ingredient.categoryID"></app-category-name>
-                    <ng-container *ngIf="hasSubCategory$ | async">
-                        <span class="ms-1 me-1">&bull;</span>
-                        <app-subcategory-name [id]="ingredient.subCategoryId"></app-subcategory-name>
-                    </ng-container>
-                </h6>
-                <p class="card-text">...</p>
-            </div>
-        </div>
-    `,
+    templateUrl: './ingredient-card.component.html',
     styles: [
         '.ingredient-card { transition: 250ms ease-in-out; }',
         '.ingredient-card.hover { cursor: pointer; transform: scale(1.015); }',
