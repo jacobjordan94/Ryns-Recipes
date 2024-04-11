@@ -1,7 +1,7 @@
 <app-ingredient-form></app-ingredient-form>
 <div class="container-fluid mt-2" *ngIf="ingredients$ | async as ingredients">
     <div class="row">
-        <h3>Ingredients &mdash; <span class="muted-text">{{ ingredients.length }}</span></h3>
+        <legend>Ingredients &mdash; <span class="muted-text">{{ ingredients.length }}</span></legend>
     </div>
     <div class="row">
         <div class="col">
