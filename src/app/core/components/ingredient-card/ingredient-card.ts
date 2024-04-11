@@ -6,11 +6,12 @@ import { AsyncPipe, NgClass, NgIf } from "@angular/common";
 import { AppCategoryNameComponent } from "../category-name/category-name.component";
 import { AppSubCategoryNameComponent } from "../subcategory-name/subcategory-name.component";
 import { BookmarksService } from "../../services/bookmarks/bookmarks.service";
+import { CategoryNamePipe } from "../../pipes/category-name/category-name.pipe";
 
 @Component({
     selector: 'app-ingredient-card',
     standalone: true,
-    imports: [ NgIf, AsyncPipe, AppCategoryNameComponent, AppSubCategoryNameComponent, NgClass ],
+    imports: [ NgIf, AsyncPipe, AppCategoryNameComponent, AppSubCategoryNameComponent, NgClass, CategoryNamePipe ],
     templateUrl: './ingredient-card.component.html',
     styles: [
         '.ingredient-card { transition: 250ms ease-in-out; position: relative; }',

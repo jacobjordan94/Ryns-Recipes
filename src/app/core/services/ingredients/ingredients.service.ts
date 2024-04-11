@@ -27,6 +27,11 @@ export class IngredientsService {
         );
     }
 
+    public getCategorySync(id: number): Category | undefined {
+        const categories = this._categories$.getValue();
+        return categories.filter(category => category.id === id).at(0);
+    }
+
     public getIngredientByCategory(categoryId: number): Observable<Ingredient[]> {
         return this.ingredient$.pipe(
             map(ingredients => ingredients.filter(ingredient => ingredient.categoryID === categoryId))
@@ -43,6 +48,11 @@ export class IngredientsService {
         return this.subCategories$.pipe(
             map(subCategories => subCategories.filter(sub => sub.id === id).at(0)),
         );
+    }
+
+    public getSubCategoryByIdSync(id: number = -1): SubCategory | undefined {
+        const subCategories = this._subCategories$.getValue();
+        return subCategories.filter(sub => sub.id === id).at(0)
     }
 
     public addIngredient(newIngredient: NewIngredient): void {
