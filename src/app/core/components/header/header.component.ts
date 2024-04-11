@@ -32,7 +32,7 @@ export class AppHeader {
         { name: 'Recipes', link: '/recipe-list' },
         { name: 'Submit Ingredients', link: '/submit-ingredients' },
         { name: 'Ingredient List', link: '/ingredient-list' },
-        { name: 'Page Not Found', link: '/page-not-found' },
+        // { name: 'Page Not Found', link: '/page-not-found' },
     ];
     
     constructor() {}
