@@ -1,0 +1,10 @@
+<ng-container *ngIf="ingredient$ | async as ingredient">
+    <h2>{{ ingredient.name }}</h2>
+    <h3 class="text-muted">
+        <app-category-name [id]="ingredient.categoryID"></app-category-name>
+        <ng-container *ngIf="hasSubCategory$ | async">
+            <span class="ms-2 me-2">&bull;</span>
+            <app-subcategory-name [id]="ingredient.subCategoryId"></app-subcategory-name>
+        </ng-container>
+    </h3>
+</ng-container>

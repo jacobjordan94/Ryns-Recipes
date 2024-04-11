@@ -3,6 +3,7 @@ import { IngredientListComponent } from './modules/ingredient-list/ingredient-li
 import { RecipeComponent } from './modules/recipe/recipe.component';
 import { SubmitIngredientComponent } from './modules/submit-ingredient/submit-ingredient.component';
 import { PageNotFoundComponent } from './modules/page-not-found/page-not-found.component';
+import { IngredientComponent } from './modules/ingredient/ingredient.component';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'recipe-list' },
@@ -10,5 +11,6 @@ export const routes: Routes = [
   { path: 'recipe-list', component: RecipeComponent },
   { path: 'submit-ingredients', component: SubmitIngredientComponent },
   { path: 'page-not-found', component: PageNotFoundComponent },
+  { path: 'ingredient/:ingredientId', component: IngredientComponent },
   { path: '**', component: PageNotFoundComponent },
 ];

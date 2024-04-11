@@ -4,11 +4,12 @@ import { IngredientsService } from '../../core/services/ingredients/ingredients.
 import { IngredientFormComponent } from './ingredient-form/ingredient-form.component';
 import { AppIngredientCard } from '../../core/components/ingredient-card/ingredient-card';
 import { AppIngredientListComponent } from '../../core/components/ingredient-list/ingredient-list.component';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-submit-ingredient',
   standalone: true,
-  imports: [CommonModule, IngredientFormComponent, AsyncPipe, AppIngredientCard, AppIngredientListComponent],
+  imports: [CommonModule, IngredientFormComponent, AsyncPipe, AppIngredientCard, AppIngredientListComponent, RouterLink],
   templateUrl: './submit-ingredient.component.html',
   styleUrl: './submit-ingredient.component.scss',
 })
