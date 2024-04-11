@@ -1,0 +1,12 @@
+<h3>Ingredients</h3>
+<hr>
+<div class="container mb-6 ps-0 pe-0">
+    <app-ingredient-list>
+        <app-ingredient-card 
+            *ngFor="let bi of bookmarkedIngredients$ | async" 
+            [hoverable]="true" 
+            [ingredient]="bi"
+            [routerLink]="['/ingredient', bi.id]"
+        ></app-ingredient-card>
+    </app-ingredient-list>
+</div>
