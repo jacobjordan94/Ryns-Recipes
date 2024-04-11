@@ -1,4 +1,2 @@
 <app-ingredient-form></app-ingredient-form>
-<div *ngFor="let ing of ingredients$ | async">
-    {{ ing.name }}
-</div>
+<app-ingredient-card *ngFor="let ing of ingredients$ | async" [ingredient]="ing"></app-ingredient-card>

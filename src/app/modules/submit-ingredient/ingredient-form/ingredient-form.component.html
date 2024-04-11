@@ -4,7 +4,7 @@
     <div class="row mb-3">
       <div class="col-md-6">
         <label for="categorySelect" class="form-label">Category</label>
-        <select formControlName="categoryId" class="form-select" name="categorySelect" id="categorySelect">
+        <select formControlName="categoryID" class="form-select" name="categorySelect" id="categorySelect">
           <option *ngFor="let category of categories$ | async" [ngValue]="category.id">{{ category.name }}</option>
         </select>
       </div>

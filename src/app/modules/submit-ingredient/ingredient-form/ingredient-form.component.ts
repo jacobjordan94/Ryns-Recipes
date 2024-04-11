@@ -15,7 +15,7 @@ import { AsyncPipe, NgFor } from '@angular/common';
 export class IngredientFormComponent {
 
   public form: FormGroup = new FormGroup({
-    categoryId: new FormControl(0),
+    categoryID: new FormControl(0),
     subCategoryId: new FormControl(0),
     name: new FormControl('', [ Validators.required ])
   });
@@ -24,7 +24,7 @@ export class IngredientFormComponent {
   subCategories$!: Observable<SubCategory[] | undefined>;
 
   private get _categoryIdForm(): FormControl<number> {
-    return this.form.get('categoryId') as FormControl<number>;
+    return this.form.get('categoryID') as FormControl<number>;
   }
   private get _subCategoryIdForm(): FormControl<number | undefined> {
     return this.form.get('subCategoryId') as FormControl<number | undefined>;

@@ -39,14 +39,14 @@ export class IngredientsService {
         );
     }
 
-    public getSubCategoryById(id: number): Observable<SubCategory | undefined> {
+    public getSubCategoryById(id: number = -1): Observable<SubCategory | undefined> {
         return this.subCategories$.pipe(
             map(subCategories => subCategories.filter(sub => sub.id === id).at(0)),
         );
     }
 
     public addIngredient(newIngredient: NewIngredient): void {
-        if(!newIngredient.subCategoryId) {
+        if(typeof newIngredient.subCategoryId === undefined) {
             delete newIngredient.subCategoryId;
         }
         const currentIngredients = this._ingredients$.getValue();
