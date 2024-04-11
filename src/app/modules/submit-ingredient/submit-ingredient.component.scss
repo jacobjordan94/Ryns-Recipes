@@ -1,34 +1,9 @@
-.dropbtn {
-  padding: 16px;
-  font-size: 16px;
-  border: none;
-  cursor: pointer;
-}
-
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-}
-
-.dropdown-content button {
-  color: black;
-  text-decoration: none;
-  display: block;
-  min-width: 300px;
-}
-
-.dropdown-content a:hover {background-color: #f1f1f1}
-
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-
-.dropdown:hover .dropbtn {
-  background-color: #3e8e41;
+:host ::ng-deep {
+  app-ingredient-card {
+    display: flex;
+    flex: 1 1 25%;
+    .ingredient-card {
+      flex-grow: 1;
+    }
+  }
 }

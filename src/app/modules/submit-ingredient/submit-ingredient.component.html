@@ -1,2 +1,4 @@
 <app-ingredient-form></app-ingredient-form>
-<app-ingredient-card *ngFor="let ing of ingredients$ | async" [ingredient]="ing"></app-ingredient-card>
+<div class="ingredients-list-container d-flex gap-2 flex-wrap">
+    <app-ingredient-card *ngFor="let ing of ingredients$ | async" [ingredient]="ing"></app-ingredient-card>
+</div>
