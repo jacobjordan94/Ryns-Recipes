@@ -1,4 +1,13 @@
 <app-ingredient-form></app-ingredient-form>
-<app-ingredient-list>
-    <app-ingredient-card *ngFor="let ing of ingredients$ | async" [ingredient]="ing"></app-ingredient-card>
-</app-ingredient-list>
+<div class="container-fluid mt-2" *ngIf="ingredients$ | async as ingredients">
+    <div class="row">
+        <h3>Ingredients &mdash; <span class="muted-text">{{ ingredients.length }}</span></h3>
+    </div>
+    <div class="row">
+        <div class="col">
+            <app-ingredient-list>
+                <app-ingredient-card *ngFor="let ing of ingredients" [ingredient]="ing"></app-ingredient-card>
+            </app-ingredient-list>
+        </div>
+    </div>
+</div>
