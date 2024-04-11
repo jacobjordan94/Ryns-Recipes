@@ -1,1 +1,4 @@
 <app-ingredient-form></app-ingredient-form>
+<div *ngFor="let ing of ingredients$ | async">
+    {{ ing.name }}
+</div>

@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { CATEGORIES, INGREDIENTS, SUBCATEGORIES } from "./ingredients.data";
-import { Category, Ingredient, SubCategory } from "./ingredients.interface";
-import { BehaviorSubject, Observable, map, tap } from "rxjs";
+import { Category, Ingredient, NewIngredient, SubCategory } from "./ingredients.interface";
+import { BehaviorSubject, Observable, map } from "rxjs";
 
 @Injectable({ providedIn: 'root' })
 export class IngredientsService {
@@ -45,10 +45,15 @@ export class IngredientsService {
         );
     }
 
-    public addIngredient(existingIngredients: Ingredient, newIngredient: Ingredient): Ingredient {
-        return {
-            ...existingIngredients,
-            ...newIngredient
-        };
+    public addIngredient(newIngredient: NewIngredient): void {
+        if(!newIngredient.subCategoryId) {
+            delete newIngredient.subCategoryId;
+        }
+        const currentIngredients = this._ingredients$.getValue();
+        const lastIngredient = currentIngredients.sort((a, b) => a.id - b.id).at(-1);
+        const newId = lastIngredient ? (lastIngredient.id + 1) : 0;
+
+        const ingredient = Object.assign(newIngredient, { id: newId });
+        this._ingredients$.next([ ingredient, ...currentIngredients, ]);
     }
 }

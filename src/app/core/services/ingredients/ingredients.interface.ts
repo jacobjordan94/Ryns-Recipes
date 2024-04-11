@@ -1,7 +1,11 @@
-export interface Ingredient {
-  id: number;
+export interface NewIngredient {
   name: string;
   categoryID: number;
+  subCategoryId?: number;
+}
+
+export interface Ingredient extends NewIngredient {
+  id: number;
 }
 
 export interface Category {

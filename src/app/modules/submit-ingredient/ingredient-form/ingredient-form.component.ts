@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Category, SubCategory } from '../../../core/services/ingredients/ingredients.interface';
+import { Category, NewIngredient, SubCategory } from '../../../core/services/ingredients/ingredients.interface';
 import { IngredientsService } from '../../../core/services/ingredients/ingredients.service';
 import { Observable, startWith, switchMap, tap } from 'rxjs';
 import { AsyncPipe, NgFor } from '@angular/common';
@@ -17,7 +17,7 @@ export class IngredientFormComponent {
   public form: FormGroup = new FormGroup({
     categoryId: new FormControl(0),
     subCategoryId: new FormControl(0),
-    ingredientName: new FormControl('', [ Validators.required ])
+    name: new FormControl('', [ Validators.required ])
   });
 
   categories$: Observable<Category[]>;
@@ -49,12 +49,17 @@ export class IngredientFormComponent {
           this._subCategoryIdForm.patchValue(0);
           this._subCategoryIdForm.enable();
         }
-      })
+      }),
     );
   }
 
   public onSubmit(): void {
-    const data = this.form.getRawValue();
-    console.log('Submit!', data);
+    const data = this.form.getRawValue() as NewIngredient;
+    this._is.addIngredient(data);
+    this.form.patchValue({
+      categoryId: 0,
+      subCategoryId: 0,
+      name: '', 
+    });
   }
 }
