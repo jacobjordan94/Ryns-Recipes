@@ -2,13 +2,16 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Category, NewIngredient, SubCategory } from '../../../core/services/ingredients/ingredients.interface';
 import { IngredientsService } from '../../../core/services/ingredients/ingredients.service';
-import { Observable, startWith, switchMap, tap } from 'rxjs';
+import { Observable, OperatorFunction, debounceTime, distinctUntilChanged, startWith, switchMap, tap } from 'rxjs';
 import { AsyncPipe, NgFor } from '@angular/common';
+import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
+import { FoodDataCentralService } from '../../../core/services/food-data-central/food-data-central.service';
+import { FoodDataCentralFood } from '../../../core/services/food-data-central/food-data-central.interface';
 
 @Component({
   selector: 'app-ingredient-form',
   standalone: true,
-  imports: [ ReactiveFormsModule, AsyncPipe, NgFor ],
+  imports: [ ReactiveFormsModule, AsyncPipe, NgFor, NgbTypeaheadModule ],
   templateUrl: './ingredient-form.component.html',
   styleUrl: './ingredient-form.component.scss'
 })
@@ -37,8 +40,10 @@ export class IngredientFormComponent {
   private get _subCategoryId(): number | undefined {
     return this._subCategoryIdForm?.value;
   }
+
+  public nameFormatter = (product: FoodDataCentralFood) => product.commonNames || product.description;
   
-  constructor(private _is: IngredientsService) { 
+  constructor(private _is: IngredientsService, private _fdcs: FoodDataCentralService) { 
     this.categories$ = this._is.categories$;
     this.subCategories$ = this._categoryIdForm.valueChanges.pipe(
       startWith(this._categoryId),
@@ -64,6 +69,20 @@ export class IngredientFormComponent {
       name: '', 
       image: '',
       description: '',
+    });
+  }
+
+  public searchFoodDataCentral: OperatorFunction<string, readonly FoodDataCentralFood[]> = (searchTerm$: Observable<string>) =>
+    searchTerm$.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap(searchTerm => this._fdcs.search(searchTerm)),
+  );
+
+  public ingredientSelected(event: {item: FoodDataCentralFood}) {
+    this.form.patchValue({
+      description: event.item.description,
+      name: event.item.commonNames || event.item.description,
     });
   }
 }
