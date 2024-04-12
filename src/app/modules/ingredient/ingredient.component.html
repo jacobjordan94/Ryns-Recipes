@@ -1,10 +1,25 @@
 <ng-container *ngIf="ingredient$ | async as ingredient">
-    <h2>{{ ingredient.name }}</h2>
-    <h3 class="text-muted">
-        {{ ingredient.categoryID | categoryName }}
-        <ng-container *ngIf="hasSubCategory$ | async">
-            <span class="ms-2 me-2">&bull;</span>
-            {{ ingredient.subCategoryId | categoryName:'sub' }}
-        </ng-container>
-    </h3>
+    <div class="container p-0">
+        <div class="page-header">
+            <div class="row">
+                <div class="col-3">
+                    <img height="200" width="200" [src]="ingredient.image" [alt]="'Picture of ' + ingredient.name" class="img-thumbnail" style="object-fit: cover;">
+                </div>
+                <div class="col-9 d-flex flex-column justify-content-end">
+                    <h2>{{ ingredient.name }}</h2>
+                    <h3 class="text-muted">
+                        {{ ingredient.categoryID | categoryName }}
+                        <ng-container *ngIf="hasSubCategory$ | async">
+                            <span class="ms-2 me-2">&bull;</span>
+                            {{ ingredient.subCategoryId | categoryName:'sub' }}
+                        </ng-container>
+                    </h3>
+                    <hr class="mt-2 mb-0">
+                </div>
+            </div>
+        </div>
+    </div>
+    <article id="ingredient-description-article" class="pt-3">
+        <p>{{ ingredient.description || 'This article has no description yet...' }}</p>
+    </article>
 </ng-container>
