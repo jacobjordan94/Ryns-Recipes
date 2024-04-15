@@ -2,11 +2,9 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Category, NewIngredient, SubCategory } from '../../../core/services/ingredients/ingredients.interface';
 import { IngredientsService } from '../../../core/services/ingredients/ingredients.service';
-import { Observable, OperatorFunction, debounceTime, distinctUntilChanged, startWith, switchMap, tap } from 'rxjs';
+import { Observable, OperatorFunction, debounceTime, distinctUntilChanged, of, startWith, switchMap, tap } from 'rxjs';
 import { AsyncPipe, NgFor } from '@angular/common';
 import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
-import { FoodDataCentralService } from '../../../core/services/food-data-central/food-data-central.service';
-import { FoodDataCentralFood } from '../../../core/services/food-data-central/food-data-central.interface';
 
 @Component({
   selector: 'app-ingredient-form',
@@ -41,9 +39,9 @@ export class IngredientFormComponent {
     return this._subCategoryIdForm?.value;
   }
 
-  public nameFormatter = (product: FoodDataCentralFood) => product.commonNames || product.description;
+  public nameFormatter = (product: any) => '';
   
-  constructor(private _is: IngredientsService, private _fdcs: FoodDataCentralService) { 
+  constructor(private _is: IngredientsService) { 
     this.categories$ = this._is.categories$;
     this.subCategories$ = this._categoryIdForm.valueChanges.pipe(
       startWith(this._categoryId),
@@ -72,14 +70,15 @@ export class IngredientFormComponent {
     });
   }
 
-  public searchFoodDataCentral: OperatorFunction<string, readonly FoodDataCentralFood[]> = (searchTerm$: Observable<string>) =>
+  public searchFoodDataCentral: OperatorFunction<string, readonly any[]> = (searchTerm$: Observable<string>) =>
     searchTerm$.pipe(
       debounceTime(300),
       distinctUntilChanged(),
-      switchMap(searchTerm => this._fdcs.search(searchTerm)),
+      // switchMap(searchTerm => this._fdcs.search(searchTerm)),
+      switchMap(_ => of([]))
   );
 
-  public ingredientSelected(event: {item: FoodDataCentralFood}) {
+  public ingredientSelected(event: {item: any}) {
     this.form.patchValue({
       description: event.item.description,
       name: event.item.commonNames || event.item.description,
