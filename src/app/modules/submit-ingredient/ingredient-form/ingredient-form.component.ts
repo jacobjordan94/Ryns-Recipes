@@ -5,6 +5,7 @@ import { IngredientsService } from '../../../core/services/ingredients/ingredien
 import { Observable, OperatorFunction, debounceTime, distinctUntilChanged, of, startWith, switchMap, tap } from 'rxjs';
 import { AsyncPipe, NgFor } from '@angular/common';
 import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
+import { WikipediaService } from '../../../core/services/wikipedia/wikipedia.service';
 
 @Component({
   selector: 'app-ingredient-form',
@@ -39,9 +40,9 @@ export class IngredientFormComponent {
     return this._subCategoryIdForm?.value;
   }
 
-  public nameFormatter = (product: any) => '';
+  public nameFormatter = (product: any) => product;
   
-  constructor(private _is: IngredientsService) { 
+  constructor(private _is: IngredientsService, private _ws: WikipediaService) { 
     this.categories$ = this._is.categories$;
     this.subCategories$ = this._categoryIdForm.valueChanges.pipe(
       startWith(this._categoryId),
@@ -74,8 +75,7 @@ export class IngredientFormComponent {
     searchTerm$.pipe(
       debounceTime(300),
       distinctUntilChanged(),
-      // switchMap(searchTerm => this._fdcs.search(searchTerm)),
-      switchMap(_ => of([]))
+      switchMap(searchTerm => this._ws.search(searchTerm)),
   );
 
   public ingredientSelected(event: {item: any}) {
