@@ -82,7 +82,8 @@ export class IngredientFormComponent {
   public ingredientSelected(event: {item: WikipediaSearchItem}) {
     this._ws.getImages(event.item.title).subscribe(images => {
       const patch: any = {
-        description: event.item.snippet,  
+        description: event.item.snippet,
+        name: event.item.title,
       };
       if(images.length) {
         patch.image = images.at(0);
