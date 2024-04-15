@@ -37,7 +37,7 @@
         [editable]="false"
       >
     </div>
-    <div class="mb-3">
+    <div class="mb-3 align-center">
       <label for="image" class="form-label">Ingredient Image</label>
       <input 
         type="text"
@@ -47,6 +47,9 @@
         name="image"
         placeholder="https://"
       >
+    </div>
+    <div class="mb-3" *ngIf="imageHasLoaded$ | async">
+      <img [src]="image$ | async" height="240">
     </div>
     <div class="mb-3">
       <label for="description">Description</label>

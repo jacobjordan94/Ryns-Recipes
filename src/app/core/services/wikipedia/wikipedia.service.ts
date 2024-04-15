@@ -37,7 +37,9 @@ export class WikipediaService {
         return this._http.get<WikipediaImagesResponse>(BASE_URL, { params })
             .pipe(
                 map(resp => Object.values(resp.query.pages).at(0)?.images || []),
+                map(rawImages => rawImages.filter(ri => !(ri.title.toLowerCase()).includes('ambox'))),
                 map(rawImages => rawImages.map(ri => `https://en.wikipedia.org/w/index.php?title=Special:Redirect/file/${ri.title}`)),
+                map(rawImages => rawImages.map(ri => ri.replaceAll(' ', '_'))),
             );
     }
 
