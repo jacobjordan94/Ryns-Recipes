@@ -48,8 +48,8 @@
         placeholder="https://"
       >
     </div>
-    <div class="mb-3" *ngIf="imageHasLoaded$ | async">
-      <img [src]="image$ | async" height="240">
+    <div class="mb-3" #collapse="ngbCollapse" [(ngbCollapse)]="!imageHasLoaded">
+      <img *ngIf="image$" [src]="image$ | async" height="240">
     </div>
     <div class="mb-3">
       <label for="description">Description</label>

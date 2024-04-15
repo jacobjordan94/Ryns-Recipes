@@ -4,14 +4,14 @@ import { Category, NewIngredient, SubCategory } from '../../../core/services/ing
 import { IngredientsService } from '../../../core/services/ingredients/ingredients.service';
 import { Observable, OperatorFunction, debounceTime, distinctUntilChanged, startWith, switchMap, tap, BehaviorSubject, of } from 'rxjs';
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
-import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCollapseModule, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 import { WikipediaService } from '../../../core/services/wikipedia/wikipedia.service';
 import { WikipediaSearchItem } from '../../../core/services/wikipedia/wikipedia.interface';
 
 @Component({
   selector: 'app-ingredient-form',
   standalone: true,
-  imports: [ ReactiveFormsModule, AsyncPipe, NgFor, NgbTypeaheadModule, NgIf ],
+  imports: [ ReactiveFormsModule, AsyncPipe, NgFor, NgbTypeaheadModule, NgIf, NgbCollapseModule ],
   templateUrl: './ingredient-form.component.html',
   styleUrl: './ingredient-form.component.scss'
 })
@@ -27,9 +27,7 @@ export class IngredientFormComponent {
 
   private _image$: BehaviorSubject<null | string> = new BehaviorSubject(null as null | string);
   public image$: Observable<null | string> = this._image$.asObservable();
-  public imageHasLoaded$: Observable<boolean> = this.image$.pipe(
-    switchMap(image => !image ? of(false) : this._loadImage(image)),
-  );
+  public imageHasLoaded!: boolean;
 
   categories$: Observable<Category[]>;
   subCategories$!: Observable<SubCategory[] | undefined>;
@@ -64,6 +62,10 @@ export class IngredientFormComponent {
         }
       }),
     );
+    this.image$.pipe(
+      switchMap(image => !image ? of(false) : this._loadImage(image)),
+      tap(console.log),
+    ).subscribe(hasLoaded => this.imageHasLoaded = hasLoaded);
   }
 
   public onSubmit(): void {
