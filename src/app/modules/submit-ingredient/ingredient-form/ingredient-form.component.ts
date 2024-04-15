@@ -6,6 +6,7 @@ import { Observable, OperatorFunction, debounceTime, distinctUntilChanged, of, s
 import { AsyncPipe, NgFor } from '@angular/common';
 import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 import { WikipediaService } from '../../../core/services/wikipedia/wikipedia.service';
+import { WikipediaSearchItem } from '../../../core/services/wikipedia/wikipedia.interface';
 
 @Component({
   selector: 'app-ingredient-form',
@@ -40,7 +41,7 @@ export class IngredientFormComponent {
     return this._subCategoryIdForm?.value;
   }
 
-  public nameFormatter = (product: any) => product;
+  public nameFormatter = (wikiItem: WikipediaSearchItem) => wikiItem.title;
   
   constructor(private _is: IngredientsService, private _ws: WikipediaService) { 
     this.categories$ = this._is.categories$;
@@ -71,17 +72,22 @@ export class IngredientFormComponent {
     });
   }
 
-  public searchFoodDataCentral: OperatorFunction<string, readonly any[]> = (searchTerm$: Observable<string>) =>
+  public seachWiki: OperatorFunction<string, readonly WikipediaSearchItem[]> = (searchTerm$: Observable<string>) =>
     searchTerm$.pipe(
       debounceTime(300),
       distinctUntilChanged(),
       switchMap(searchTerm => this._ws.search(searchTerm)),
   );
 
-  public ingredientSelected(event: {item: any}) {
-    this.form.patchValue({
-      description: event.item.description,
-      name: event.item.commonNames || event.item.description,
+  public ingredientSelected(event: {item: WikipediaSearchItem}) {
+    this._ws.getImages(event.item.title).subscribe(images => {
+      const patch: any = {
+        description: event.item.snippet,  
+      };
+      if(images.length) {
+        patch.image = images.at(0);
+      }
+      this.form.patchValue(patch);
     });
   }
 }

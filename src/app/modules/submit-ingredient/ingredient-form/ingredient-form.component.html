@@ -30,8 +30,9 @@
         name="ingredientName"
         placeholder="Add ingredient name here..."
         [class.is-invalid]="form.get('name')?.invalid && form.get('name')?.touched"
-        [ngbTypeahead]="searchFoodDataCentral"
+        [ngbTypeahead]="seachWiki"
         [resultFormatter]="nameFormatter"
+        [inputFormatter]="nameFormatter"
         (selectItem)="ingredientSelected($event)"
         [editable]="false"
       >
