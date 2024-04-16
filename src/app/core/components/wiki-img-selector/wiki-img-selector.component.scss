@@ -9,7 +9,7 @@
         // Stolen from .form-control class
         border: var(--bs-border-width) solid var(--bs-border-color);
         border-radius: var(--bs-border-radius);
-        &[disabled] {
+        &[disabled=true] {
             .card.wiki-img-selector-card {
                 opacity: 25%;
                 filter: grayscale(0.75);
@@ -27,7 +27,7 @@
             cursor: pointer;
             transition: 350ms ease-in-out all;
             &:hover, &.active {
-                transform: scale(1.025);
+                transform: scale(1.05);
             }
             img.wiki-img-selector-img {
                 height: inherit;
