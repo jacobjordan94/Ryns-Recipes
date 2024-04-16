@@ -4,6 +4,7 @@
 :host {
     .card.wiki-img-selector-card {
         height: 100%;
+        overflow: hidden;
         cursor: pointer;
         transition: 350ms ease-in-out all;
         &:hover, &.active {
