@@ -18,40 +18,45 @@
         }
     }
 
-    .card.wiki-img-selector-card {
-        height: 100%;
-        overflow: hidden;
-        cursor: pointer;
-        transition: 350ms ease-in-out all;
-        &:hover, &.active {
-            transform: scale(1.025);
-        }
-        img.wiki-img-selector-img {
-            height: inherit;
-            object-fit: cover;
-            pointer-events: none;
-            user-select: none;
-        }
-        div.wiki-img-selector-active-indicator {
-            transition: 250ms ease-in-out all;
-            height: 0;
-            background: $primary;
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            left: 0;
-            color: white;
-            span {
-                opacity: 0%;
+    div.wiki-img-card-wrapper {
+        flex-grow: 1;
+        .card.wiki-img-selector-card {
+            height: 100%;
+            max-height: 128px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: 350ms ease-in-out all;
+            &:hover, &.active {
+                transform: scale(1.025);
             }
-        }
-        &.active {
+            img.wiki-img-selector-img {
+                height: inherit;
+                object-fit: cover;
+                pointer-events: none;
+                user-select: none;
+            }
             div.wiki-img-selector-active-indicator {
-                height: 1.5em;
+                transition: 250ms ease-in-out all;
+                height: 0;
+                background: $primary;
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                left: 0;
+                color: white;
                 span {
-                    opacity: 100%;
+                    opacity: 0%;
+                }
+            }
+            &.active {
+                div.wiki-img-selector-active-indicator {
+                    height: 1.5em;
+                    span {
+                        opacity: 100%;
+                    }
                 }
             }
         }
     }
+
 }
