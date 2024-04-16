@@ -1,11 +1,12 @@
 import { NgClass, NgFor } from '@angular/common';
 import { Component, Input, OnChanges } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { DefaultImgDirective } from '../../directives/default-img/default-img.directive';
 
 @Component({
   selector: 'app-wiki-img-selector',
   standalone: true,
-  imports: [ NgFor, NgClass ],
+  imports: [ NgFor, NgClass, DefaultImgDirective ],
   templateUrl: './wiki-img-selector.component.html',
   styleUrl: './wiki-img-selector.component.scss',
   providers: [
@@ -16,7 +17,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     }
   ],
 })
-export class WikiImgSelectorComponent implements ControlValueAccessor, OnChanges {
+export class WikiImgSelectorComponent implements ControlValueAccessor {
 
   @Input() images: string[] | null = null;
   @Input() placeholder!: string;
@@ -57,10 +58,6 @@ export class WikiImgSelectorComponent implements ControlValueAccessor, OnChanges
 
   setDisabledState(disabled: boolean): void {
     this.disabled = disabled;
-  }
-
-  ngOnChanges(changes: any) {
-    console.log(changes);
   }
   
 }

@@ -5,11 +5,12 @@ import { IngredientsService } from "../../services/ingredients/ingredients.servi
 import { AsyncPipe, NgClass, NgIf } from "@angular/common";
 import { BookmarksService } from "../../services/bookmarks/bookmarks.service";
 import { CategoryNamePipe } from "../../pipes/category-name/category-name.pipe";
+import { DefaultImgDirective } from "../../directives/default-img/default-img.directive";
 
 @Component({
     selector: 'app-ingredient-card',
     standalone: true,
-    imports: [ NgIf, AsyncPipe, NgClass, CategoryNamePipe ],
+    imports: [ NgIf, AsyncPipe, NgClass, CategoryNamePipe, DefaultImgDirective ],
     templateUrl: './ingredient-card.component.html',
     styles: [
         '.ingredient-card { transition: 250ms ease-in-out; position: relative; }',
