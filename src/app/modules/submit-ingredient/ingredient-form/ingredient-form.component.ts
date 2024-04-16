@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Category, NewIngredient, SubCategory } from '../../../core/services/ingredients/ingredients.interface';
 import { IngredientsService } from '../../../core/services/ingredients/ingredients.service';
@@ -47,6 +47,8 @@ export class IngredientFormComponent {
 
   public nameFormatter = (wikiItem: WikipediaSearchItem) => wikiItem.title;
   
+  @Output() public onSubmit: EventEmitter<NewIngredient> = new EventEmitter();
+  
   constructor(private _is: IngredientsService, private _ws: WikipediaService) { 
     this.categories$ = this._is.categories$;
     this.subCategories$ = this._categoryIdForm.valueChanges.pipe(
@@ -64,9 +66,11 @@ export class IngredientFormComponent {
     );
   }
 
-  public onSubmit(): void {
+  public submit(): void {
     const data = this.form.getRawValue() as NewIngredient;
-    this._is.addIngredient(data);
+    //  @ts-ignore - name is being sent as an object; something to do with typeahead module, dumb fix
+    data.name = data.name.title;
+    this.onSubmit.emit(data);
     this.form.patchValue({
       categoryId: 0,
       subCategoryId: 0,

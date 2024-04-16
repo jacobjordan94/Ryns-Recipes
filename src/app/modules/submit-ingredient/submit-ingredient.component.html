@@ -1,4 +1,4 @@
-<app-ingredient-form></app-ingredient-form>
+<app-ingredient-form (onSubmit)="addIngredient($event)"></app-ingredient-form>
 <div class="container-fluid mt-2" *ngIf="ingredients$ | async as ingredients">
     <div class="row">
         <legend>Ingredients &mdash; <span class="muted-text">{{ ingredients.length }}</span></legend>

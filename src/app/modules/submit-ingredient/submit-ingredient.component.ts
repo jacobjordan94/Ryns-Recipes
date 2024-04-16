@@ -5,6 +5,7 @@ import { IngredientFormComponent } from './ingredient-form/ingredient-form.compo
 import { AppIngredientCard } from '../../core/components/ingredient-card/ingredient-card';
 import { AppIngredientListComponent } from '../../core/components/ingredient-list/ingredient-list.component';
 import { RouterLink } from '@angular/router';
+import { NewIngredient } from '../../core/services/ingredients/ingredients.interface';
 
 @Component({
   selector: 'app-submit-ingredient',
@@ -18,6 +19,10 @@ export class SubmitIngredientComponent {
   public ingredients$ = this._is.ingredient$;
 
   constructor(private _is: IngredientsService) {}
+
+  public addIngredient(ingredient: NewIngredient) {
+    this._is.addIngredient(ingredient);
+  }
 
 }
 
