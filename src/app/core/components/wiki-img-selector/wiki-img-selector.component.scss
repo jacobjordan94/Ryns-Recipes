@@ -2,6 +2,16 @@
 @import "bootstrap/scss/variables";
 
 :host {
+
+    .wiki-img-container {
+        padding-top: calc(var(--bs-gutter-x) * 0.5);
+        padding-bottom: calc(var(--bs-gutter-x) * 0.5);
+
+        // Stolen from .form-control class
+        border: var(--bs-border-width) solid var(--bs-border-color);
+        border-radius: var(--bs-border-radius);
+    }
+
     .card.wiki-img-selector-card {
         height: 100%;
         overflow: hidden;

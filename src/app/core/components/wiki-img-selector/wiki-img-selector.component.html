@@ -1,23 +1,33 @@
-<div class="wiki-img-container container p-0">
+<div class="wiki-img-container container pb-0">
     <div class="row">
-        <ng-container *ngFor="let image of images">
-            <div [ngClass]="cols" class="mb-4" [class.d-none]="hiddenImages.includes(image)">
-                <div 
-                    class="card wiki-img-selector-card" 
-                    [class.active]="image === selectedImage" 
-                    (click)="onSelectImage(image)"
-                >
-                    <img class="card-img wiki-img-selector-img" [src]="image" [alt]="image" (onError)="hiddenImages.push(image)">
-                    <div class="
-                        wiki-img-selector-active-indicator 
-                        d-flex 
-                        justify-content-center 
-                        align-items-center"
+        @if (images?.length) {
+            @for (image of images; track image) {
+                <div [ngClass]="cols" class="mb-4" [class.d-none]="hiddenImages.includes(image)">
+                    <div 
+                        class="card wiki-img-selector-card" 
+                        [class.active]="image === selectedImage" 
+                        (click)="onSelectImage(image)"
                     >
-                        <span>Selected</span>
+                        <img class="card-img wiki-img-selector-img" [src]="image" [alt]="image" (onError)="hiddenImages.push(image)">
+                        <div class="
+                            wiki-img-selector-active-indicator 
+                            d-flex 
+                            justify-content-center 
+                            align-items-center"
+                        >
+                            <span>Selected</span>
+                        </div>
                     </div>
                 </div>
+            }
+        } @else {
+            <div class="no-images h-100 d-flex align-items-center justify-content-center" style="height: 120px !important;">
+                <span class="text-muted">
+                    <em>
+                        {{ placeholder }}
+                    </em>
+                </span>
             </div>
-        </ng-container>
+        }
     </div>
 </div>

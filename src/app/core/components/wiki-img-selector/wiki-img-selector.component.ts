@@ -1,12 +1,12 @@
-import { NgClass, NgFor } from '@angular/common';
-import { Component, Input, OnChanges } from '@angular/core';
+import { NgClass } from '@angular/common';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DefaultImgDirective } from '../../directives/default-img/default-img.directive';
 
 @Component({
   selector: 'app-wiki-img-selector',
   standalone: true,
-  imports: [ NgFor, NgClass, DefaultImgDirective ],
+  imports: [ NgClass, DefaultImgDirective ],
   templateUrl: './wiki-img-selector.component.html',
   styleUrl: './wiki-img-selector.component.scss',
   providers: [
@@ -17,21 +17,27 @@ import { DefaultImgDirective } from '../../directives/default-img/default-img.di
     }
   ],
 })
-export class WikiImgSelectorComponent implements ControlValueAccessor {
+export class WikiImgSelectorComponent implements ControlValueAccessor, OnChanges {
 
   @Input() images: string[] | null = null;
-  @Input() placeholder!: string;
+  @Input() placeholder: string = 'Nothing here!';
   @Input('cols') cols = 'col-2'
 
   hiddenImages: string[] = [];
 
-  selectedImage!: string;
+  selectedImage!: string | undefined;
 
   onChange = (_selectedImage: string) => {};
   onTouched = () => {};
 
   touched: boolean = false;
   disabled: boolean = false;
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    if(changes['images']) {
+      this.selectedImage = undefined;
+    }
+  }
 
   public onSelectImage(selectedImage: string) {
     this.selectedImage = selectedImage;
