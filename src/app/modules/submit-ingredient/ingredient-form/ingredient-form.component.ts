@@ -85,8 +85,10 @@ export class IngredientFormComponent {
   );
 
   public ingredientSelected(event: {item: WikipediaSearchItem}) {
+    const sentences = event.item.snippet.split('.');
+    const description = sentences.length === 1 ? sentences.at(0) : (sentences.at(0) + '.');
     const patch: any = {
-      description: event.item.snippet,
+      description,
       name: event.item.title,
     };
     this.form.patchValue(patch);
