@@ -7,11 +7,12 @@ import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { NgbCollapseModule, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 import { WikipediaService } from '../../../core/services/wikipedia/wikipedia.service';
 import { WikipediaSearchItem } from '../../../core/services/wikipedia/wikipedia.interface';
+import { WikiImgSelectorComponent } from '../../../core/components/wiki-img-selector/wiki-img-selector.component';
 
 @Component({
   selector: 'app-ingredient-form',
   standalone: true,
-  imports: [ ReactiveFormsModule, AsyncPipe, NgFor, NgbTypeaheadModule, NgIf, NgbCollapseModule ],
+  imports: [ ReactiveFormsModule, AsyncPipe, NgFor, NgbTypeaheadModule, NgIf, NgbCollapseModule , WikiImgSelectorComponent ],
   templateUrl: './ingredient-form.component.html',
   styleUrl: './ingredient-form.component.scss'
 })
@@ -24,10 +25,9 @@ export class IngredientFormComponent {
     image: new FormControl(''),
     description: new FormControl(''),
   });
-
-  private _image$: BehaviorSubject<null | string> = new BehaviorSubject(null as null | string);
-  public image$: Observable<null | string> = this._image$.asObservable();
-  public imageHasLoaded!: boolean;
+  
+  private _images$: BehaviorSubject<string[]> = new BehaviorSubject([] as string[]);
+  public images$: Observable<string[]> = this._images$.asObservable();
 
   categories$: Observable<Category[]>;
   subCategories$!: Observable<SubCategory[] | undefined>;
@@ -62,10 +62,6 @@ export class IngredientFormComponent {
         }
       }),
     );
-    this.image$.pipe(
-      switchMap(image => !image ? of(false) : this._loadImage(image)),
-      tap(console.log),
-    ).subscribe(hasLoaded => this.imageHasLoaded = hasLoaded);
   }
 
   public onSubmit(): void {
@@ -78,7 +74,7 @@ export class IngredientFormComponent {
       image: '',
       description: '',
     });
-    this._image$.next(null);
+    this._images$.next([]);
   }
 
   public seachWiki: OperatorFunction<string, readonly WikipediaSearchItem[]> = (searchTerm$: Observable<string>) =>
@@ -89,16 +85,15 @@ export class IngredientFormComponent {
   );
 
   public ingredientSelected(event: {item: WikipediaSearchItem}) {
+    const patch: any = {
+      description: event.item.snippet,
+      name: event.item.title,
+    };
+    this.form.patchValue(patch);
     this._ws.getImages(event.item.title).subscribe(images => {
-      const patch: any = {
-        description: event.item.snippet,
-        name: event.item.title,
-      };
       if(images.length) {
-        patch.image = images.at(0);
-        this._image$.next(patch.image);
+        this._images$.next(images);
       }
-      this.form.patchValue(patch);
     });
   }
 

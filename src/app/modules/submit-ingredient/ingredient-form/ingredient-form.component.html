@@ -39,17 +39,13 @@
     </div>
     <div class="mb-3 align-center">
       <label for="image" class="form-label">Ingredient Image</label>
-      <input 
-        type="text"
-        formControlName="image"
-        class="form-control" 
-        id="image" 
-        name="image"
-        placeholder="https://"
-      >
-    </div>
-    <div class="mb-3" #collapse="ngbCollapse" [(ngbCollapse)]="!imageHasLoaded">
-      <img *ngIf="image$" [src]="image$ | async" height="240">
+      <app-wiki-img-selector 
+        formControlName="image" 
+        id="image" name="image" 
+        placeholder="You'll need to select an ingredient first"
+        [images]="images$ | async"
+        cols="col-4"
+      ></app-wiki-img-selector>
     </div>
     <div class="mb-3">
       <label for="description">Description</label>
@@ -57,7 +53,7 @@
         name="description" 
         id="ingredientDescription"
         class="form-control"
-        cols="30" 
+        cols="col-2" 
         rows="3" 
         formControlName="description"
       ></textarea>

@@ -1,0 +1,23 @@
+<div class="wiki-img-container container p-0">
+    <div class="row">
+        <ng-container *ngFor="let image of images">
+            <div [ngClass]="cols" class="mb-4">
+                <div 
+                    class="card wiki-img-selector-card" 
+                    [class.active]="image === selectedImage" 
+                    (click)="onSelectImage(image)"
+                >
+                    <img class="card-img wiki-img-selector-img" [src]="image" [alt]="image">
+                    <div class="
+                        wiki-img-selector-active-indicator 
+                        d-flex 
+                        justify-content-center 
+                        align-items-center"
+                    >
+                        <span>Selected</span>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</div>
