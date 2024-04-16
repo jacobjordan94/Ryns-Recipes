@@ -23,6 +23,8 @@ export class WikiImgSelectorComponent implements ControlValueAccessor {
   @Input() placeholder!: string;
   @Input('cols') cols = 'col-2'
 
+  hiddenImages: string[] = [];
+
   selectedImage!: string;
 
   onChange = (_selectedImage: string) => {};
