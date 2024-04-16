@@ -2,7 +2,6 @@
 @import "bootstrap/scss/variables";
 
 :host {
-
     .wiki-img-container {
         padding-top: calc(var(--bs-gutter-x) * 0.5);
         padding-bottom: calc(var(--bs-gutter-x) * 0.5);
@@ -10,6 +9,13 @@
         // Stolen from .form-control class
         border: var(--bs-border-width) solid var(--bs-border-color);
         border-radius: var(--bs-border-radius);
+        &[disabled] {
+            .card.wiki-img-selector-card {
+                opacity: 25%;
+                filter: grayscale(0.75);
+                pointer-events: none;
+            }
+        }
     }
 
     .card.wiki-img-selector-card {
@@ -24,6 +30,7 @@
             height: inherit;
             object-fit: cover;
             pointer-events: none;
+            user-select: none;
         }
         div.wiki-img-selector-active-indicator {
             transition: 250ms ease-in-out all;
