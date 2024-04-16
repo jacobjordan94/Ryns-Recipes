@@ -58,5 +58,15 @@
             }
         }
     }
+}
 
+:host(.ng-invalid) {
+    .wiki-img-container {
+        border-color: var(--bs-form-invalid-border-color);
+    }
+    .no-images {
+        span {
+            color: var(--bs-form-invalid-border-color) !important;
+        }
+    }
 }
