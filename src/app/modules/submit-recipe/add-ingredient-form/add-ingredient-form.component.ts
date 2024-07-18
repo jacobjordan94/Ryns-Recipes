@@ -70,7 +70,6 @@ export class AddIngredientFormComponent {
       this._ingredientForm.patchValue(undefined);
     });
 
-    this.addIngredientForm.valueChanges.subscribe(changes => console.log('changes', changes));
   };
 
   @Output() public onSubmit: EventEmitter<number> = new EventEmitter();
