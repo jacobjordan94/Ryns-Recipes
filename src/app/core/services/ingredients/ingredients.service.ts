@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { CATEGORIES, INGREDIENTS, SUBCATEGORIES } from "./ingredients.data";
 import { Category, Ingredient, SubCategory } from "./ingredients.interface";
-import { BehaviorSubject, Observable, map, of } from "rxjs";
+import { BehaviorSubject, Observable, map } from "rxjs";
 
 @Injectable({ providedIn: 'root' })
 export class IngredientsService {
@@ -17,17 +17,16 @@ export class IngredientsService {
 
     public getIngredient(id: number): Observable<Ingredient | undefined> {
         return this.ingredients$.pipe(
-            map(ingredients => ingredients.filter(value => value.id === id).at(0))
+            map(ingredients => ingredients.filter(value => value.id === id).at(0)),
         )
     }
 
 
     public getIngredientById(categoryId: number, subcategoryId?: number): Observable<Ingredient[]> {
-        if (subcategoryId) {
+
+        if (subcategoryId === 0 || subcategoryId) {
             return this.ingredients$.pipe(
-                map(ingredients => ingredients.filter(
-                    value => value.categoryID === categoryId && value.subcategoryID === subcategoryId
-                ))
+                map(ingredients => ingredients.filter((value: any) => value.categoryID === categoryId && value.subcategoryID === subcategoryId)),
             );
 
         }
@@ -35,8 +34,8 @@ export class IngredientsService {
         else {
             return this.ingredients$.pipe(
                 map(ingredients => ingredients.filter(
-                    value => value.categoryID === categoryId
-                ))
+                    (value: any) => value.categoryID === categoryId
+                )),
             )
         }
     }
